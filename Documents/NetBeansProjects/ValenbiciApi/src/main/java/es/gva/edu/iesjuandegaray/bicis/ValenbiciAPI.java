@@ -12,7 +12,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class ValenbiciAPI {
-     private static final String API_URL = "https://valencia.opendatasoft.com/api/explore/v2.1/catalog/datasets/valenbisi-disponibilitat-valenbisi-dsiponibilidad/records?f=json&location=39.46447,-0.39308&distance=10&limit=3";
+
+    private static final String API_URL = "https://valencia.opendatasoft.com/api/explore/v2.1/catalog/datasets/valenbisi-disponibilitat-valenbisi-dsiponibilidad/records?f=json&location=39.46447,-0.39308&distance=10&limit=3";
 
     public static void main(String[] args) {
         if (API_URL.isEmpty()) {
@@ -37,23 +38,23 @@ public class ValenbiciAPI {
 
                     //  Recorre el vector resultsArray mostrando los datos solicitados    
                     for (int i = 0; i < resultsArray.length(); i++) {
-                        
-                        JSONObject record = resultsArray.getJSONObject(i);
-                        // Extraer datos relevantes
-                         String id = record.getString("id"); // Ejemplo: clave "id"
-                         JSONObject fields = record.getJSONObject("fields");
-                         String stationName = fields.getString("station_name"); // Ejemplo: clave "station_name"
-                         int bikesAvailable = fields.getInt("bikes_available"); // Ejemplo: clave "bikes_available"
+                        // Obtenemos el objeto JSON que representa una estación concreta
+                        JSONObject estacion = resultsArray.getJSONObject(i);
 
-                         // Mostrar los datos
-                         System.out.println("Estación: " + stationName);
-                         System.out.println("ID: " + id);
-                         System.out.println("Bicis disponibles: " + bikesAvailable);
-                         System.out.println("--------------------------");
+                        // Sacamos el nombre de la estación
+                        String nombreEstacion = estacion.getString("name");
+                        // Obtenemos cuántas bicis hay disponibles en esa estación
+                        int bicicletasDisponibles = estacion.getInt("available");
+                        // Obtenemos cuántos huecos libres hay para dejar bicis
+                        int espaciosDisponibles = estacion.getInt("free");
+
+                         // Imprimimos por consola para comprobar que funciona bien
+                        System.out.println("Nombre de la estacion: " + nombreEstacion);
+                        System.out.println("Numero de bicicletas disponibles: " + bicicletasDisponibles);
+                        System.out.println("Numero de espacios disponibles: " + espaciosDisponibles);
                     }
-                    
 
-                 } catch (org.json.JSONException e) {
+                } catch (org.json.JSONException e) {
                     // Si la respuesta no es un array JSON, imprimimos el mensaje de error
                     System.err.println("Error al procesar los datos JSON: " + e.getMessage());
                 }

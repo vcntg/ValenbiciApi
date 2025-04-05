@@ -42,7 +42,7 @@ public class ValenbiciAPI {
                         JSONObject estacion = resultsArray.getJSONObject(i);
 
                         // Sacamos el nombre de la estación
-                        String nombreEstacion = estacion.getString("name");
+                        String nombreEstacion = estacion.getString("address");
                         // Obtenemos cuántas bicis hay disponibles en esa estación
                         int bicicletasDisponibles = estacion.getInt("available");
                         // Obtenemos cuántos huecos libres hay para dejar bicis
